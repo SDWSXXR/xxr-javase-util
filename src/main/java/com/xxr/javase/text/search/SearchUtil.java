@@ -15,22 +15,8 @@ public class SearchUtil {
 
     public static void main(String[] args) {
         List<File> t = new ArrayList<File>();
-        getAllTextFile(new File ("D:\\新建文件夹"),t);
-
-        try {
-            InputStreamReader isr = new InputStreamReader(new FileInputStream("D:\\1.txt"),"GBK");
-            BufferedReader br = new BufferedReader(isr);
-            String temp = null;
-            while((temp = br.readLine()) != null){
-                if(temp.contains("")){
-                    System.out.println(temp);
-                }
-            }
-            br.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        getAllTextFile(new File ("D:\\新建文件夹"),t);//获取所有txt文件
+        search(t,"",null);
     }
 
     /**
@@ -42,19 +28,25 @@ public class SearchUtil {
 
         for(File f : textFiles){
             try {
+                System.err.println(f.getPath());
                 InputStreamReader isr = new InputStreamReader(new FileInputStream(f),"GBK");
                 BufferedReader br = new BufferedReader(isr);
                 String temp = null;
+                int line = 0;
                 while((temp = br.readLine()) != null){
+                    line++;
                     if(temp.contains(key)){
-                        System.out.println(temp);
-                        
+                        System.out.println("行数："+line + "---" +temp);
+                        if(path!=null){
+
+                        }
                     }
                 }
                 br.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            System.err.println("=====================================================================================");
         }
     }
 
