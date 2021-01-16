@@ -15,8 +15,12 @@ public class SearchUtil {
 
     public static void main(String[] args) {
         List<File> t = new ArrayList<File>();
-        getAllTextFile(new File ("D:\\新建文件夹"),t);//获取所有txt文件
-        search(t,"",null);
+        getAllTextFile(new File ("D:"),t);//获取所有txt文件
+        try {
+            search(t,"","D:\\y.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -24,29 +28,27 @@ public class SearchUtil {
      *@author xxr
      *@date 2021-01-15 16:14:31
      */
-    public static void search(List<File> textFiles , String key,String path){
-
+    public static void search(List<File> textFiles , String key,String path) throws Exception{
+        File pathFile = new File(path);
+        if(!pathFile.exists()){
+            pathFile.createNewFile();
+        }
         for(File f : textFiles){
-            try {
-                System.err.println(f.getPath());
-                InputStreamReader isr = new InputStreamReader(new FileInputStream(f),"GBK");
-                BufferedReader br = new BufferedReader(isr);
-                String temp = null;
-                int line = 0;
-                while((temp = br.readLine()) != null){
-                    line++;
-                    if(temp.contains(key)){
-                        System.out.println("行数："+line + "---" +temp);
-                        if(path!=null){
-
-                        }
-                    }
+            FileWriter fw = new FileWriter(path,true);
+            fw.write(f.getPath()+""+"\r\n");
+            InputStreamReader isr = new InputStreamReader(new FileInputStream(f),"GBK");
+            BufferedReader br = new BufferedReader(isr);
+            String temp = null;
+            int line = 0;
+            while((temp = br.readLine()) != null){
+                line++;
+                if(temp.contains(key)){
+                    fw.write("行数("+line + ") >>>" +temp+"\r\n");
                 }
-                br.close();
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-            System.err.println("=====================================================================================");
+            fw.write("===================================================================="+"\r\n");
+            br.close();
+            fw.close();
         }
     }
 
