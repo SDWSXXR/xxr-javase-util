@@ -1,4 +1,4 @@
-package com.xxr.javase.text.search;
+package com.xxr.javase.text;
 
 import com.sun.org.glassfish.gmbal.Description;
 
@@ -15,9 +15,12 @@ public class SearchUtil {
 
     public static void main(String[] args) {
         List<File> t = new ArrayList<File>();
-        getAllTextFile(new File ("D:"),t);//获取所有txt文件
+        String text = "催眠";
+        String path = "D:\\SPXD\\text";
+        //String path = "D:\\SPXD\\text";
+        getAllTextFile(new File (path),t);//获取所有txt文件
         try {
-            search(t,"","D:\\y.txt");
+            search(t,text,"D:\\y.txt");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -30,6 +33,7 @@ public class SearchUtil {
      */
     public static void search(List<File> textFiles , String key,String path) throws Exception{
         File pathFile = new File(path);
+        pathFile.delete();
         if(!pathFile.exists()){
             pathFile.createNewFile();
         }

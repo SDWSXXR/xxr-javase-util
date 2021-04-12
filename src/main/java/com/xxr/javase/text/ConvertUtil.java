@@ -1,4 +1,4 @@
-package com.xxr.javase.text.tr2sm;
+package com.xxr.javase.text;
 
 import com.github.stuxuhai.jpinyin.ChineseHelper;
 
