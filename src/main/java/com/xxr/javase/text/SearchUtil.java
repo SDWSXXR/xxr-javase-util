@@ -18,7 +18,7 @@ public class SearchUtil {
         String text = "催眠";
         String path = "D:\\SPXD\\text";
         //String path = "D:\\SPXD\\text";
-        getAllTextFile(new File (path),t);//获取所有txt文件
+        getAllTextFile(new File (path),t);
         try {
             search(t,text,"D:\\y.txt");
         } catch (Exception e) {
@@ -58,9 +58,13 @@ public class SearchUtil {
 
 
     public static List<File> getAllTextFile(File pathFile, List<File> textFiles){
-        if(!pathFile.exists())return null;
+        if(!pathFile.exists()) {
+            return null;
+        }
         File[] files = pathFile.listFiles();
-        if(files.length == 0)return textFiles;
+        if(files.length == 0) {
+            return textFiles;
+        }
         for(File f : files){
             if(f.isDirectory()){
                 getAllTextFile(f,textFiles);
