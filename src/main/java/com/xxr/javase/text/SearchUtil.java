@@ -19,14 +19,14 @@ public class SearchUtil {
         //String path = "D:\\SPXD\\text";
         getAllTextFile(new File (path),t);
         try {
-            search(t,text,"D:\\y.txt");
+            search(t,text,"D:\\"+text+".txt");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
-     *@Description 根据关键词查找，path为结果输出目录，为空则只在控制台打印不输出
+     *@Description 根据关键词查找，path为结果输出目录
      *@author xxr
      *@date 2021-01-15 16:14:31
      */
@@ -68,6 +68,7 @@ public class SearchUtil {
             isr.close();
         }
         Set<Integer> set = sortMap.keySet();
+        writer.write(key+"\r\n");
         for(int i : set){
 //            fw.write(i+"\t\t------"+sortMap.get(i)  + "\r\n");
             writer.write(i+"\t\t------"+sortMap.get(i)  + "\r\n");
