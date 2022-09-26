@@ -3,20 +3,19 @@ package com.xxr.javase.text;
 import com.sun.org.glassfish.gmbal.Description;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author xxr
- * @Description æŸ¥æ‰¾æŸä¸€ä¸ªtxtæ–‡ä»¶æˆ–è€…ç›®å½•ä¸‹æ‰€æœ‰textæ–‡ä»¶ä¸­çš„æŸä¸ªå­—æ®µ å¹¶æ˜¾ç¤ºå…¶ä½ç½®æ•°é‡
+ * @Description ²éÕÒÄ³Ò»¸ötxtÎÄ¼ş»òÕßÄ¿Â¼ÏÂËùÓĞtextÎÄ¼şÖĞµÄÄ³¸ö×Ö¶Î ²¢ÏÔÊ¾ÆäÎ»ÖÃÊıÁ¿
  * @date 2021/1/15 13:36
  */
 public class SearchUtil {
 
     public static void main(String[] args) {
         List<File> t = new ArrayList<File>();
-        String text = "å‚¬çœ ";
-        String path = "D:\\SPXD\\text";
+        String text = "";
+        String path = "F:\\music\\text";
         //String path = "D:\\SPXD\\text";
         getAllTextFile(new File (path),t);
         try {
@@ -27,33 +26,54 @@ public class SearchUtil {
     }
 
     /**
-     *@Description æ ¹æ®å…³é”®è¯æŸ¥æ‰¾ï¼Œpathä¸ºç»“æœè¾“å‡ºç›®å½•ï¼Œä¸ºç©ºåˆ™åªåœ¨æ§åˆ¶å°æ‰“å°ä¸è¾“å‡º
+     *@Description ¸ù¾İ¹Ø¼ü´Ê²éÕÒ£¬pathÎª½á¹ûÊä³öÄ¿Â¼£¬Îª¿ÕÔòÖ»ÔÚ¿ØÖÆÌ¨´òÓ¡²»Êä³ö
      *@author xxr
      *@date 2021-01-15 16:14:31
      */
     public static void search(List<File> textFiles , String key,String path) throws Exception{
+        Map<Integer,String> sortMap = new TreeMap<Integer, String>(
+                new Comparator<Integer>() {
+                    public int compare(Integer o1 , Integer o2) {
+                        return o2.compareTo(o1);
+                    }
+                }
+        );
         File pathFile = new File(path);
         pathFile.delete();
         if(!pathFile.exists()){
             pathFile.createNewFile();
         }
+        FileWriter fw = new FileWriter(path,true);
+        BufferedWriter writer = new BufferedWriter (new OutputStreamWriter (new FileOutputStream (path,true),"GBK"));
+//            fw.write(f.getPath()+""+"\r\n");
         for(File f : textFiles){
-            FileWriter fw = new FileWriter(path,true);
-            fw.write(f.getPath()+""+"\r\n");
             InputStreamReader isr = new InputStreamReader(new FileInputStream(f),"GBK");
             BufferedReader br = new BufferedReader(isr);
             String temp = null;
             int line = 0;
+            int count = 0;
             while((temp = br.readLine()) != null){
                 line++;
                 if(temp.contains(key)){
-                    fw.write("è¡Œæ•°("+line + ") >>>" +temp+"\r\n");
+                    count ++;
+//                    fw.write("ĞĞÊı("+line + ") >>>" +temp+"\r\n");
                 }
             }
-            fw.write("===================================================================="+"\r\n");
+//            fw.write("===================================================================="+"\r\n");
+            if(count > 0){
+                sortMap.put(count,sortMap.get(count) == null ? f.getName() :sortMap.get(count) + ","+f.getName());
+//                fw.write(f.getAbsolutePath()+"\t\t------"+count  + "\r\n");
+            }
             br.close();
-            fw.close();
+            isr.close();
         }
+        Set<Integer> set = sortMap.keySet();
+        for(int i : set){
+//            fw.write(i+"\t\t------"+sortMap.get(i)  + "\r\n");
+            writer.write(i+"\t\t------"+sortMap.get(i)  + "\r\n");
+        }
+        writer.close();
+        fw.close();
     }
 
 
