@@ -1,5 +1,6 @@
 package com.xxr.javase.file;
 
+import com.google.common.io.Files;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,21 +11,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  æ–‡ä»¶å·¥å…·ç±»
+ *  ÎÄ¼ş¹¤¾ßÀà
  * @author XXR
  */
 public class FileUtils {
 
 //    public  static  String path = "D:\\st";
 //
-//    public static void main(String[] args) {
-////        delFileByTxt("D://demo");
-////        copyFileName("");
-////        creatUrlFile("");
-////        List<String> urlList = creatUrlList(path);
-////        openUrl(urlList,path.substring(path.lastIndexOf("/")+1));
+    public static void main(String[] args) {
+//        delFileByTxt("D://demo");
+//        copyFileName("");
+//        creatUrlFile("");
+//        List<String> urlList = creatUrlList(path);
+//        openUrl(urlList,path.substring(path.lastIndexOf("/")+1));
 //        findErrorFile(path);
-//    }
+        getSameFile("I://eclipse_work//.metadata//.mylyn//.taskListIndex//new a//·ÖÀà","F://A³Â¼ÓĞñÖ®Ç°µÄFÅÌÎÄ¼ş//.untitled//250//250");
+    }
 
 
 
@@ -50,7 +52,7 @@ public class FileUtils {
         try{
             File file = new File(path);
             if(!file.exists()){
-                System.err.println("æ–‡ä»¶è·¯å¾„ä¸å¯¹ï¼");
+                System.err.println("ÎÄ¼şÂ·¾¶²»¶Ô£¡");
                 return;
             }
             File errorFileTxt = new File("D://ErrorFile.txt");
@@ -62,7 +64,7 @@ public class FileUtils {
                     BufferedReader br = new BufferedReader(isr);
                     String lineText = null;
                     while ((lineText = br.readLine()) != null){
-                        if(lineText.contains("æœªæ‰¾åˆ°ç¬¦åˆè¦æ±‚çš„æ–‡ä»¶")){
+                        if(lineText.contains("Î´ÕÒµ½·ûºÏÒªÇóµÄÎÄ¼ş")){
                             errorFileTxtWriter.write(lineText);
                             errorFileTxtWriter.write("\r\n");
                         }
@@ -119,7 +121,7 @@ public class FileUtils {
                     File[] files1 = pFile.listFiles();
                     for(File f : files1){
                         boolean b = f.renameTo(new File("path+\"/\"+f.getName()"));
-                        System.out.println(b ? f.getName()+"ï¼šä¼ è¾“æˆåŠŸï¼" : f.getName()+"ï¼šä¼ è¾“å¤±è´¥ï¼");
+                        System.out.println(b ? f.getName()+"£º´«Êä³É¹¦£¡" : f.getName()+"£º´«ÊäÊ§°Ü£¡");
                     }
                 }
             }
@@ -152,5 +154,53 @@ public class FileUtils {
 
     }
 
+    /**
+     * ¸ù¾İÎÄ¼şÃû»ñÈ¡Á½¸öÎÄ¼ş¼ĞÂ·¾¶ÖĞ°üº¬µÄÏàÍ¬ÎÄ¼ş(ÒÔtargetÎª¸¨)
+     */
+    public static void getSameFile(String resource,String target){
+        File resourceFile = new File(resource);
+        File targetFile = new File(target);
+        //·Ö±ğ»ñÈ¡ÎÄ¼ş
+        List<File> resourceFiles = new ArrayList<File>();
+        resourceFiles = getFileList(resourceFiles,resourceFile);
+        List<File> targetFiles = new ArrayList<File>();
+        targetFiles = getFileList(targetFiles,targetFile);
+        for(File f : resourceFiles){
+            for(File f2 : targetFiles) {
+                if(getFileNameSuff(f.getName()).contains(getFileNameSuff(f2.getName()))){
+                    System.out.println(f2.getName());
+                    try {
+//                        File toFile = new File("D://1//"+f2.getName());
+//                        if(!toFile.getParentFile().exists()){
+//                            toFile.mkdirs();
+//                        }
+//                        Files.copy(f2,toFile);
+                        System.out.println(f2.delete());
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Í¨¹ıµİ¹é»ñÈ¡ÎÄ¼ş¼ĞÄÚËùÓĞµÄÎÄ¼ş
+     * @param path
+     */
+    public static List<File> getFileList(List<File> files ,File path){
+        for(File f: path.listFiles()){
+            if(f.isDirectory()){
+                getFileList(files,f);
+            }else{
+                files.add(f);
+            }
+        }
+        return  files;
+    }
+
+    public static  String getFileNameSuff(String name){
+        return name.substring(0,name.lastIndexOf("."));
+    }
 
 }
