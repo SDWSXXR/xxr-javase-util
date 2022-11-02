@@ -13,7 +13,9 @@ import java.util.List;
  * @author Allen
  */
 public class BtCatSelenium {
-
+    public static void main(String[] args) {
+        openUrl(creatUrlList("D://123.txt"),"2.txt");
+    }
 
     public static List<String> creatUrlList(String path){
         List<String> urlList = new ArrayList<String>();
@@ -48,7 +50,7 @@ public class BtCatSelenium {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("ÂºÄÂßãËé∑Âèñ‰ø°ÊÅØÔºåÊÄªÊï∞ÊçÆÔºö"+urlList.size()+"Êù°");
+        System.out.println("ø™ ºªÒ»°–≈œ¢£¨◊‹ ˝æ›£∫"+urlList.size()+"Ãı");
         int i = 0;
         int error = 0;
         int success = 0;
@@ -68,40 +70,44 @@ public class BtCatSelenium {
                     boolean succ = false;
                     for(WebElement we :elements){
                         String text = we.findElement(By.xpath("div[2]")).getText();
-                        text = text.replace(" ","").substring(text.indexOf("Â∞èÔºö")+2);
-                        text = text.substring(0,text.lastIndexOf("ÂàõÂª∫"));
+                        text = text.replace(" ","").substring(text.indexOf("–°£∫")+2);
+                        text = text.substring(0,text.lastIndexOf("¥¥Ω®"));
                         if(checkSize(text)){
-                            //Â¶ÇÊûúÁªèÂèó‰Ωè‰∫ÜÂÖöÁöÑËÄÉÁ†î
+                            //»Áπ˚æ≠ ‹◊°¡Àµ≥µƒøº—–
                             WebElement ele = we.findElement(By.xpath("div[1]/div/a"));
                             driver.get(ele.getAttribute("href"));
                             if(alertExists(driver)){
                                 driver.switchTo().alert().accept();
                             }
-                            fw.write(fanNum+"\t"+driver.findElement(By.id("down-url")).getAttribute("href"));
-                            System.out.println(url+"\tËé∑ÂèñÊàêÂäüÔºÅ");
+                            if(fanNum.length() > 7){
+                                fw.write(fanNum+"\t"+driver.findElement(By.id("down-url")).getAttribute("href"));
+                            }else{
+                                fw.write(fanNum+"\t\t"+driver.findElement(By.id("down-url")).getAttribute("href"));
+                            }
+                            System.out.println(url+"\tªÒ»°≥…π¶£°");
                             succ = true;
                             success++;
                             break;
                         }
                     }
                     if(!succ){
-                        fw.write(fanNum+"\tÊú™ÊâæÂà∞Á¨¶ÂêàË¶ÅÊ±ÇÁöÑÊñá‰ª∂ÔºåËØ∑Ê£ÄÊü•ÔºÅ");
+                        fw.write(fanNum+"\tŒ¥’“µΩ∑˚∫œ“™«ÛµƒŒƒº˛£¨«ÎºÏ≤È£°");
                         waring++;
                     }
                 }else{
                     waring++;
-                    fw.write(fanNum+"\tÊú™Êü•ÊâæÂà∞Êï∞ÊçÆÔºÅ");
-                    System.out.println(url+"\tÊú™Êü•ÊâæÂà∞Êï∞ÊçÆÔºÅ");
+                    fw.write(fanNum+"\tŒ¥≤È’“µΩ ˝æ›£°");
+                    System.out.println(url+"\tŒ¥≤È’“µΩ ˝æ›£°");
                 }
                 fw.write("\r\n");
             }catch (Exception e){
                 error++;
                 errorList.add(url);
-                System.err.println(url+"\tÊâìÂºÄÂ§±Ë¥•ÔºÅ:"+e);
+                System.err.println(url+"\t¥Úø™ ß∞‹£°:"+e);
             }
             i++;
         }
-        System.out.println("ÊâßË°åÂÆåÊØïÔºåÂÖ±ÊâßË°å"+i+"Êù°ÔºåÊàêÂäü"+success+"Êù°ÔºåË≠¶Âëä"+waring+"Êù°ÔºåÂ§±Ë¥•"+error+"Êù°");
+        System.out.println("÷¥––ÕÍ±œ£¨π≤÷¥––"+i+"Ãı£¨≥…π¶"+success+"Ãı£¨æØ∏Ê"+waring+"Ãı£¨ ß∞‹"+error+"Ãı");
         driver.quit();
         try {
             fw.flush();
@@ -135,13 +141,13 @@ public class BtCatSelenium {
 
     public static boolean checkSize(String sizeText){
         if(sizeText.contains("GB")){
-            //Â§ß‰∫é1gÁöÑ
-            Double size = Double.valueOf(sizeText.replace(" ","").replace("GB",""));
-            if(size>4){
-                return false;
-            }
+            //¥Û”⁄1gµƒ
+//            Double size = Double.valueOf(sizeText.replace(" ","").replace("GB",""));
+//            if(size>4){
+//                return false;
+//            }
         }else if(sizeText.contains("MB")){
-            //Â∞è‰∫é1g
+            //–°”⁄1g
             Double size = Double.valueOf(sizeText.replace(" ","").replace("MB",""));
             if(size<300){
                 return false;

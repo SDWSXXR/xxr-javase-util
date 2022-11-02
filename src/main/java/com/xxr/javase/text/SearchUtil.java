@@ -13,17 +13,63 @@ import java.util.*;
 public class SearchUtil {
 
     public static void main(String[] args) {
-        List<File> t = new ArrayList<File>();
-        String text = "";
-        String path = "F:\\music\\text";
-        //String path = "D:\\SPXD\\text";
-        getAllTextFile(new File (path),t);
+//        List<File> t = new ArrayList<File>();
+//        String text = "";
+//        String path = "F:\\music\\text";
+//        //String path = "D:\\SPXD\\text";
+//        getAllTextFile(new File (path),t);
+//        try {
+//            search(t,text,"D:\\"+text+".txt");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        cutTxtByKey("未查找到数据","D://2.txt");
+    }
+
+    public static void cutTxtByKey(String [] key,String txtFilePath){
+
         try {
-            search(t,text,"D:\\"+text+".txt");
+            File txtFile = new File(txtFilePath);
+            Map<String,FileWriter> writeMap = new HashMap<String,FileWriter>();
+            for(String name:key){
+                FileWriter fw = new FileWriter("D://"+name+".txt",true);
+                writeMap.put(name,fw);
+            }
+            InputStreamReader isr = new InputStreamReader(new FileInputStream(txtFile),"GBK");
+            BufferedReader br = new BufferedReader(isr);
+            String temp = null;
+            while((temp = br.readLine()) != null){
+                for(String name : key){
+                    if(temp.contains(name)){
+                        writeMap.get(name).write(temp+"\r\n");
+                    }
+                }
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
+    public static void cutTxtByKey(String  key,String txtFilePath){
+
+        try {
+            File txtFile = new File(txtFilePath);
+            BufferedWriter writer = new BufferedWriter (new OutputStreamWriter (new FileOutputStream ("D://123.txt",true),"GBK"));
+            InputStreamReader isr = new InputStreamReader(new FileInputStream(txtFile),"GBK");
+            BufferedReader br = new BufferedReader(isr);
+            String temp = null;
+            String text = "";
+            while((temp = br.readLine()) != null){
+                if(temp.contains(key)){
+                    text +=temp+"\r\n";
+                }
+            }
+            writer.write(text);
+            writer.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     /**
      *@Description 根据关键词查找，path为结果输出目录

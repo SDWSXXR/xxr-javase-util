@@ -20,12 +20,12 @@ public class FileUtils {
 //
     public static void main(String[] args) {
 //        delFileByTxt("D://demo");
-//        copyFileName("");
+        copyFileName("F:\\A陈加旭之前的F盘文件\\.untitled\\250");
 //        creatUrlFile("");
 //        List<String> urlList = creatUrlList(path);
 //        openUrl(urlList,path.substring(path.lastIndexOf("/")+1));
 //        findErrorFile(path);
-        getSameFile("I://eclipse_work//.metadata//.mylyn//.taskListIndex//new a//分类","F://A陈加旭之前的F盘文件//.untitled//250//250");
+//        getSameFile("I://eclipse_work//.metadata//.mylyn//.taskListIndex//new a//分类","F://A陈加旭之前的F盘文件//.untitled//250//250");
     }
 
 
@@ -37,7 +37,7 @@ public class FileUtils {
             File[] files = dic.listFiles();
             for(File f : files){
                 fw.write(f.getName().substring(0,f.getName().lastIndexOf(".")));
-                fw.write("\t\t");
+                fw.write("\t\t\t");
                 fw.write("\r\n");
             }
             fw.flush();
