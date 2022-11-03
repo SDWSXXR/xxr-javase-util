@@ -20,12 +20,13 @@ public class FileUtils {
 //
     public static void main(String[] args) {
 //        delFileByTxt("D://demo");
-        copyFileName("F:\\A陈加旭之前的F盘文件\\.untitled\\250");
+//        copyFileName("F:\\A陈加旭之前的F盘文件\\.untitled\\250");
 //        creatUrlFile("");
 //        List<String> urlList = creatUrlList(path);
 //        openUrl(urlList,path.substring(path.lastIndexOf("/")+1));
 //        findErrorFile(path);
 //        getSameFile("I://eclipse_work//.metadata//.mylyn//.taskListIndex//new a//分类","F://A陈加旭之前的F盘文件//.untitled//250//250");
+        copyFileByText("D://1.txt","F://A陈加旭之前的F盘文件//.untitled//250");
     }
 
 
@@ -199,6 +200,25 @@ public class FileUtils {
         return  files;
     }
 
+    public static void copyFileByText(String txtPath,String filePath){
+        try{
+            InputStreamReader isr = new InputStreamReader(new FileInputStream(txtPath),"GBK");
+            List<File> fileList = new ArrayList<File>();
+            fileList = getFileList(fileList,new File(filePath));
+            BufferedReader br = new BufferedReader(isr);
+            String temp = null;
+            while((temp = br.readLine()) != null){
+                for(File f: fileList){
+                    if(f.getName().contains(temp.replace("\t",""))){
+                        Files.copy(f,new File("D://1//"+f.getName()));
+                    }
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
     public static  String getFileNameSuff(String name){
         return name.substring(0,name.lastIndexOf("."));
     }
