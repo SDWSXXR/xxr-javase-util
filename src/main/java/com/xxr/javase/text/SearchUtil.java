@@ -13,17 +13,16 @@ import java.util.*;
 public class SearchUtil {
 
     public static void main(String[] args) {
-//        List<File> t = new ArrayList<File>();
-//        String text = "";
-//        String path = "F:\\music\\text";
-//        //String path = "D:\\SPXD\\text";
-//        getAllTextFile(new File (path),t);
-//        try {
-//            search(t,text,"D:\\"+text+".txt");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-        cutTxtByKey("未查找到数据","D://2.txt");
+        List<File> t = new ArrayList<File>();
+        String text = "子宫";
+        String path = "F:\\BaiduNetdiskDownload\\text";
+        getAllTextFile(new File (path),t);
+        try {
+            search(t,text,"D:\\"+text+".txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        cutTxtByKey("未查找到数据","D://2.txt");
     }
 
     public static void cutTxtByKey(String [] key,String txtFilePath){

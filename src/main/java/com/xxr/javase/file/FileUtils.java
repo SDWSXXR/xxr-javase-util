@@ -26,7 +26,7 @@ public class FileUtils {
 //        openUrl(urlList,path.substring(path.lastIndexOf("/")+1));
 //        findErrorFile(path);
 //        getSameFile("I://eclipse_work//.metadata//.mylyn//.taskListIndex//new a//分类","F://A陈加旭之前的F盘文件//.untitled//250//250");
-        copyFileByText("D://1.txt","F://A陈加旭之前的F盘文件//.untitled//250");
+//        copyFileByText("D://1.txt","F://A陈加旭之前的F盘文件//.untitled//250");
     }
 
 

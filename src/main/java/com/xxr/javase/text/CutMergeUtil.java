@@ -5,6 +5,8 @@ import java.io.*;
 public class CutMergeUtil {
     public static void main(String[] args) throws Exception {
         cutWithKey("D:\\1.txt","D:\\1","");
+
+
     }
 
 

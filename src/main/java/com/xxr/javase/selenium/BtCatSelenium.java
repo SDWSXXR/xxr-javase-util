@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class BtCatSelenium {
     public static void main(String[] args) {
-        openUrl(creatUrlList("D://123.txt"),"2.txt");
+        openUrl(creatUrlList("D://1.txt"),"2.txt");
     }
 
     public static List<String> creatUrlList(String path){
