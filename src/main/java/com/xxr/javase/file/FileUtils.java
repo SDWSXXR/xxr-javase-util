@@ -27,6 +27,8 @@ public class FileUtils {
 //        findErrorFile(path);
 //        getSameFile("I://eclipse_work//.metadata//.mylyn//.taskListIndex//new a//分类","F://A陈加旭之前的F盘文件//.untitled//250//250");
 //        copyFileByText("D://1.txt","F://A陈加旭之前的F盘文件//.untitled//250");
+        moveAllFileToPath("",
+                "\\");
     }
 
 
@@ -111,7 +113,61 @@ public class FileUtils {
 
     }
 
+    /**
+     * 转移path目录下所有的文件（非文件夹） 到mainPath目录
+     * @param path
+     */
+    public static void moveAllFileToPath(String path,String mainPath){
+        File mainFile = new File(path);
+        if(!mainFile.exists()){
+            throw new RuntimeException(path+"目录不存在！");
+        }
+        File[] files = mainFile.listFiles();
+        if(files == null){
+            throw new RuntimeException(path+"目录下没有子文件！！");
+        }
+        for(File f : files){
+            if(f.isDirectory()){//如果是文件夹 就递归一下继续转移
+                moveAllFileToPath(f.getAbsolutePath(),mainPath);
+            }else{
+                if(!path.equals(mainPath)){
+                    String newPath = rename(mainPath + "/" + f.getName());
+                    f.renameTo(new File(newPath));
+                }
+            }
+        }
+    }
 
+    private static int nowKey = 0;
+    private static synchronized int getKey(){
+        //此处可以思考下  i++  与 i+=1的区别
+        //i++ 返回i+1之前的值   i+=1 返回i+1之后的值
+        return nowKey +=1 ;
+    }
+
+    /**
+     * 传一个文件的目录 判断这个文件存不存在 如果存在就重新命名
+     * @param path
+     * @return
+     */
+    private static String rename(String path){
+        String result = "";
+        File temp = new File(path);
+        String fileName = temp.getName();
+        if(temp.exists()){
+            fileName = getFileNameSuff(fileName) + "_" +getKey()+ getFileType(fileName);
+        }else{
+            return temp.getAbsolutePath();
+        }
+        File newFile = new File(temp.getParent() + "/" + fileName);
+        if(newFile.exists()){
+            result = rename(newFile.getParent() + "/" +  temp.getName());
+        }else{
+            result =  newFile.getAbsolutePath();
+        }
+        nowKey = 0;//找到不重名的文件 将key设置为0
+        return result;
+    }
 
     public static void moveFileToParent(String path){
         File parentFile = new File(path);
@@ -121,7 +177,7 @@ public class FileUtils {
                 if(pFile.isDirectory()){
                     File[] files1 = pFile.listFiles();
                     for(File f : files1){
-                        boolean b = f.renameTo(new File("path+\"/\"+f.getName()"));
+                        boolean b = f.renameTo(new File(path+f.getName()));
                         System.out.println(b ? f.getName()+"：传输成功！" : f.getName()+"：传输失败！");
                     }
                 }
@@ -221,6 +277,9 @@ public class FileUtils {
     }
     public static  String getFileNameSuff(String name){
         return name.substring(0,name.lastIndexOf("."));
+    }
+    public static  String getFileType(String name){
+        return name.substring(name.lastIndexOf("."));
     }
 
 }
