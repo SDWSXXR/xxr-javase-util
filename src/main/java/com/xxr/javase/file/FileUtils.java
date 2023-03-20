@@ -20,7 +20,7 @@ public class FileUtils {
 //
     public static void main(String[] args) {
 //        delFileByTxt("D://demo");
-//        copyFileName("F:\\A陈加旭之前的F盘文件\\.untitled\\250");
+//        copyFileName("F :\\A陈加旭之前的F盘文件\\.untitled\\250");
 //        creatUrlFile("");
 //        List<String> urlList = creatUrlList(path);
 //        openUrl(urlList,path.substring(path.lastIndexOf("/")+1));
@@ -29,6 +29,18 @@ public class FileUtils {
 //        copyFileByText("D://1.txt","F://A陈加旭之前的F盘文件//.untitled//250");
         moveAllFileToPath("",
                 "\\");
+//        rnameByKey("C:\\Users\\17279\\Desktop\\1\\官能","{");
+    }
+
+    public static void rnameByKey(String path ,String key){
+        File file = new File(path);
+        for(File f : file.listFiles()){
+            String name = f.getName();
+            if(name.contains(key)){
+                name = name.substring(0,name.lastIndexOf(key)) + ".txt";
+            }
+            f.renameTo(new File("D://txt//" + name));
+        }
     }
 
 
