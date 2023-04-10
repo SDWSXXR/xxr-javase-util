@@ -14,8 +14,8 @@ public class SearchUtil {
 
     public static void main(String[] args) {
         List<File> t = new ArrayList<File>();
-        String text = "×Ó¹¬";
-        String path = "F:\\BaiduNetdiskDownload\\text";
+        String text = "";
+        String path = "";
         getAllTextFile(new File (path),t);
         try {
             search(t,text,"D:\\"+text+".txt");
