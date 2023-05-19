@@ -29,15 +29,32 @@ public class FileUtils {
 //        copyFileByText("D://1.txt","F://A陈加旭之前的F盘文件//.untitled//250");
         moveAllFileToPath("\\",
                 "\\");
-//        rnameByKey("C:\\Users\\17279\\Desktop\\1\\官能","{");
+        //rnameByKey("F://BaiduNetdiskDownload//1","{");
+//        rnameByLength("","".length());
     }
 
     public static void rnameByKey(String path ,String key){
         File file = new File(path);
         for(File f : file.listFiles()){
             String name = f.getName();
+            if("：、，".contains(name.substring(0,1))){
+                name = name.substring(1);
+            }
             if(name.contains(key)){
                 name = name.substring(0,name.lastIndexOf(key)) + ".txt";
+            }
+            f.renameTo(new File("D://txt//" + name));
+        }
+    }
+    public static void rnameByLength(String path ,int length){
+        File file = new File(path);
+        for(File f : file.listFiles()){
+            String name = f.getName();
+            if("：、，".contains(name.substring(0,1))){
+                name = name.substring(1);
+            }
+            if(name.length() - 4 > length){
+                name = name.substring(0,length) + ".txt";
             }
             f.renameTo(new File("D://txt//" + name));
         }

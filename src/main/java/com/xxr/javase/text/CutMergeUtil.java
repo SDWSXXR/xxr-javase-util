@@ -1,11 +1,17 @@
 package com.xxr.javase.text;
 
+import com.xxr.javase.file.FileUtils;
+
 import java.io.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class CutMergeUtil {
     public static void main(String[] args) throws Exception {
-        cutWithKey("D:\\1.txt","D:\\1","");
-
+//        cutWithKey("D:\\1.txt","D:\\1","");
+        mergeTxt("D:\\t",".txt");
 
     }
 
@@ -52,5 +58,30 @@ public class CutMergeUtil {
         }
         br.close();
         isr.close();
+    }
+
+    public static void mergeTxt(String path,String fileName){
+        try {
+            File souce = new File(path + "//merge");
+            File dest = new File(path + "//" + fileName);
+            dest.createNewFile();
+            BufferedWriter writer = new BufferedWriter (new OutputStreamWriter (new FileOutputStream (dest,true),"UTF-8"));
+            String temp = null;
+            List<File> files = Arrays.asList(souce.listFiles());
+            files.sort(Comparator.comparing(f -> Integer.parseInt(FileUtils.getFileNameSuff(f.getName()))));
+            for(File f : files){
+                InputStreamReader isr = new InputStreamReader(new FileInputStream(f),"UTF-8");
+                BufferedReader br = new BufferedReader(isr);
+                while((temp = br.readLine()) != null){
+                    writer.write(temp);
+                    writer.write("\r\n");
+                }
+                br.close();
+                isr.close();
+            }
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
