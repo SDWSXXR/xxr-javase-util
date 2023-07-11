@@ -284,6 +284,18 @@ public class FileUtils {
         }
         return  files;
     }
+    public static List<File> getFileList(List<File> files ,File path,String type){
+        for(File f: path.listFiles()){
+            if(f.isDirectory()){
+                getFileList(files,f,type);
+            }else{
+                if(type.equals(getFileNameLast(f.getName()).toLowerCase())){
+                    files.add(f);
+                }
+            }
+        }
+        return  files;
+    }
 
     public static void copyFileByText(String txtPath,String filePath){
         try{
@@ -306,6 +318,9 @@ public class FileUtils {
     }
     public static  String getFileNameSuff(String name){
         return name.substring(0,name.lastIndexOf("."));
+    }
+    public static  String getFileNameLast(String name){
+        return name.substring(name.lastIndexOf(".")+1);
     }
     public static  String getFileType(String name){
         return name.substring(name.lastIndexOf("."));

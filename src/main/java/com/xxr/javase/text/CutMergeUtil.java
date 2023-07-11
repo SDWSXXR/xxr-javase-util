@@ -11,7 +11,7 @@ import java.util.List;
 public class CutMergeUtil {
     public static void main(String[] args) throws Exception {
 //        cutWithKey("D:\\1.txt","D:\\1","");
-        mergeTxt("D:\\t",".txt");
+        mergeTxt("D:\\t","ÀÏ·ò²»ÊÇÂÜÀò¿Ø.txt");
 
     }
 
