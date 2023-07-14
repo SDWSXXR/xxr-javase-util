@@ -27,10 +27,10 @@ public class FileUtils {
 //        findErrorFile(path);
 //        getSameFile("I://eclipse_work//.metadata//.mylyn//.taskListIndex//new a//分类","F://A陈加旭之前的F盘文件//.untitled//250//250");
 //        copyFileByText("D://1.txt","F://A陈加旭之前的F盘文件//.untitled//250");
-        moveAllFileToPath("\\",
-                "\\");
+//        moveAllFileToPath("F:\\迅雷下载\\",
+//                "F:\\迅雷下载\\");
         //rnameByKey("F://BaiduNetdiskDownload//1","{");
-//        rnameByLength("","".length());
+        rnameByLength("F:\\书",55);
     }
 
     public static void rnameByKey(String path ,String key){
@@ -46,17 +46,18 @@ public class FileUtils {
             f.renameTo(new File("D://txt//" + name));
         }
     }
-    public static void rnameByLength(String path ,int length){
+    public static void rnameByLength(String path ,int length){//55
         File file = new File(path);
-        for(File f : file.listFiles()){
+        List<File> list = new ArrayList<>();
+        getFileList(list,file,"txt");
+        for(File f : list){
             String name = f.getName();
-            if("：、，".contains(name.substring(0,1))){
-                name = name.substring(1);
-            }
             if(name.length() - 4 > length){
+                System.err.println(name);
                 name = name.substring(0,length) + ".txt";
+                System.out.println(name);
+                f.renameTo(new File(f.getParentFile().getAbsolutePath()+ "/" + name));
             }
-            f.renameTo(new File("D://txt//" + name));
         }
     }
 

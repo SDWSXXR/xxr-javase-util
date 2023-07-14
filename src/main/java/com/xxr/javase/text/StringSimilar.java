@@ -21,13 +21,20 @@ public class StringSimilar {
             name1.add(f.getName());
         }
         List<String> name2 = new ArrayList<>(name1);
+        int i = 1;
+        int j = 1000;
         for(String n1 : name1){
+            if( i == j){
+                System.err.println(i +"/"+ name1.size());
+                j = j + 1000;
+            }
             for(String n2 : name2){
                 double similarity = getSimilarity(n1 , n2);
                 if(similarity >= 0.95 && similarity < 1){
                     System.out.println(similarity +"-----------"+n1 + "-------" + n2);
                 }
             }
+            i++;
         }
     }
 
